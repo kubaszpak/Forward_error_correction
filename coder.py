@@ -1,6 +1,4 @@
 from bitarray import bitarray
-import random
-
 
 class Coder:
     def __init__(self, array):
