@@ -1,5 +1,6 @@
 from bitarray import bitarray
 
+
 class Coder:
     def __init__(self, array):
         self.length = len(array) * 3
