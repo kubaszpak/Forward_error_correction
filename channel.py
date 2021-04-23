@@ -4,16 +4,17 @@ import random
 
 class Channel:
     def __init__(self, array, probability):
-        self.distorted_array = array
         self.length = len(array)
+        self.distorted_array = bitarray(self.length)
         self.probability = probability
-        self.distort()
+        self.distort(array)
 
-
-    def distort(self):
+    def distort(self, array):
         for i in range(self.length):
-            if(random.randint(0,100) <= self.probability*100):
-                if(self.distorted_array[i] == 0 ):
+            if(random.randint(0, 100)/100 < self.probability):
+                if(array[i] == 0):
                     self.distorted_array[i] = 1
-                else: 
+                else:
                     self.distorted_array[i] = 0
+            else:
+                self.distorted_array[i] = array[i]
