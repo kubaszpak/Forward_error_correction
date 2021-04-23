@@ -2,8 +2,8 @@
 
 <br>
 
-### Piotr Łach
-### Jakub Szpak
+### Piotr Łach, 256761
+### Jakub Szpak, 252782
 
 
 
@@ -11,8 +11,26 @@
 <br>
 <br>
 
-
-Dla wygenerowanego ciągu bitów wielkości 2^18 = 262144, następnie zakodowanego przez potrojenie każdego bitu -> 2^18*3 w zależności od prawdopodobieństwa p, tj. prawdopodobieństwa zmianu bitu w ciągu na przeciwny otrzymano następujące przekłamania [%].
-
+Eksperyment nr 1:
+ - Wygenerowano ciąg bitów wielkości $2^{18}$ = 262144
+ - Zakodowano go przez potrojenie każdego bitu
+ - Ciąg umieszczono w symulatorze kanału transmisyjnego, który w zależności od prawdopodobieństwa p zamieniał bity w ciągu na przeciwne. Dobrano prawdopodobieństwa z przedziału [0;30]%
+ - Otrzymano następujące wartości przekłamań:
+  
+  <br>
 
 ![alt text](charts/chart_1.png "Title")
+
+<br>
+<br>
+
+
+Eksperyment nr 2:
+ - Wygenerowano ciąg bitów wielkości $2^m$, m $\in$ [10,24]
+ - Zakodowano go przez potrojenie każdego bitu
+ - Ciąg umieszczono w symulatorze kanału transmisyjnego, który ze stałym prawdopodobieństwem 0,15 zamieniał bity w ciągu na przeciwne 
+ - Otrzymano następujące wartości przekłamań
+
+<br>
+
+![alt text](charts/chart_2.png "Title")
