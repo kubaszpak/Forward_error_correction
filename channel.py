@@ -1,10 +1,11 @@
 from bitarray import bitarray
 import random
+from numpy import *
 
 
 class Channel:
     def __init__(self, array, probability):
-        self.distorted_array = array
+        self.distorted_array = array.copy()
         self.length = len(array)
         self.probability = probability
         self.distort()
