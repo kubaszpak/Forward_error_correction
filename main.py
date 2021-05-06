@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import time
 
 
+
 def error_factor(generated_array, decoded_array):
     if(len(generated_array) != len(decoded_array)):
         return None
@@ -30,7 +31,7 @@ def main():
 
     coder = Coder(generator.bit_array)
 
-    a.append(i)
+    # a.append(i)
 
     channel = Channel(coder.triple_array, 0.15)
     # print(coder.triple_array)
@@ -48,6 +49,10 @@ def main():
     # plt.show()
     # end = time.time()
     # print(end-start)
+
+    bchcodedarray = coder.bch_code(generator.bit_array, 5)
+
+    print(bchcodedarray)
 
 
 if __name__ == '__main__':
