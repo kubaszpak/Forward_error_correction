@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 
 doc.pdf
+.vscode/
+main.ipynb
