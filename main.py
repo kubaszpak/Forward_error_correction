@@ -8,6 +8,8 @@ from bitarray.util import urandom
 from bitarray import bitarray
 import bchlib
 import os
+import random
+from komm import BCHCode
 
 
 
@@ -53,29 +55,52 @@ def main():
     # plt.show()
     # end = time.time()
     # print(end-start)
+    """
+    ETAP II
+    """
 
-    """ETAP II"""
-
-    data = bitarray(800000)  # random bitarray len = 512
-    # data = bytearray(os.urandom(512))
+    # random bitarray len = 127
+    data = bitarray([random.randint(0, 1) for i in range(127)])
+    # data = bytearray(os.urandom(255))
 
     # create a bch object
     BCH_POLYNOMIAL = 8219
-    BCH_BITS = 32
+    BCH_BITS = 19
     bch = bchlib.BCH(BCH_POLYNOMIAL, BCH_BITS)
+    print(f"bch.m: {bch.m}, bch.n: {bch.n}, bch.t: {bch.t}")
 
     ecc = bch.encode(data)
 
-    print(ecc)
+    print(data, len(data))
+    print(ecc, len(ecc))
 
     result_bits = bitarray()
 
     result_bits.frombytes(bytes(ecc))
 
-    print(len(data))
-    print(len(result_bits))
-    print(error_factor(data, result_bits))
+    # print(data)
+    print(result_bits, len(result_bits))
+    # print(error_factor(data, result_bits))
 
+    packet = ecc + data
+
+    print('data size: %d' % (len(data)))
+    print('ecc size: %d' % (len(ecc)))
+    print('packet size: %d' % (len(packet)))
+
+
+    # KOMM class BCHCode(mu (wplywa na dlugosc wektora kodowego n = 2^(mu) - 1) , tau - The parameter τ is called the designed error-correcting capability of the BCH code (zdolnosc korekcyjna)) 
+    print("\n \n  there is komm section \n")
+
+    code = BCHCode(5,3)
+    print(code)
+    print((code.length, code.dimension, code.minimum_distance))
+
+    code.generator_polynomial
+    
+    encodedmsg = code.encode(0b01010101, Generator)
+
+    print(encodedmsg)
 
 if __name__ == '__main__':
     main()
