@@ -9,6 +9,8 @@ from bitarray import bitarray
 import bchlib
 import os
 import random
+from komm import BCHCode
+
 
 
 def error_factor(generated_array, decoded_array):
@@ -86,6 +88,19 @@ def main():
 #     print('ecc size: %d' % (len(ecc)))
 #     print('packet size: %d' % (len(packet)))
 
+
+    # KOMM class BCHCode(mu (wplywa na dlugosc wektora kodowego n = 2^(mu) - 1) , tau - The parameter τ is called the designed error-correcting capability of the BCH code (zdolnosc korekcyjna)) 
+    print("\n \n  there is komm section \n")
+
+    code = BCHCode(5,3)
+    print(code)
+    print((code.length, code.dimension, code.minimum_distance))
+
+    code.generator_polynomial
+    
+    encodedmsg = code.encode(0b01010101, Generator)
+
+    print(encodedmsg)
 
 if __name__ == '__main__':
     main()
