@@ -4,13 +4,8 @@ from decoder import Decoder
 from channel import Channel
 from coder import Coder
 from generator import Generator
-from bitarray.util import urandom
-from bitarray import bitarray
-import bchlib
 import os
 import random
-from komm import BCHCode
-
 
 
 def error_factor(generated_array, decoded_array):
@@ -30,77 +25,40 @@ def main():
     # a = []
     # b = []
 
-    # for i in range(10, 25):
+    # for i in range(0, 30):
 
-    generator = Generator(2**20)
-    # print(generator.bit_array)
+    generated_array = Generator().populate_array(2**20)
+    # print(generated_array)
 
-    coder = Coder(generator.bit_array)
+    coded_array = Coder().triple_code(generated_array)
+    # print(coded_array)
 
-    # # a.append(i)
+    # a.append(i / 100)
 
-    channel = Channel(coder.triple_array, 0.15)
-    # print(coder.triple_array)
+    distorted_array = Channel(i/100).distort(coded_array)
+    # print(distorted_array)
 
-    decoder = Decoder(channel.distorted_array)
-    # print(decoder.decoded_array)
+    decoded_array = Decoder().decode(distorted_array)
+    # print(decoded_array)
 
-    print(error_factor(generator.bit_array, decoder.decoded_array))
+    print(error_factor(generated_array, decoded_array))
+    # b.append(error_factor(generated_array, decoded_array))
 
     # print(a, b)
     # plt.plot(a, b)
-    # plt.title("Error percentage depending on the sample size m")
-    # plt.xlabel("Sample size m as Exponent of two")
+    # plt.title("Error percentage depending on the probability p")
+    # plt.xlabel("Probability of error p")
     # plt.ylabel("Error factor in %")
     # plt.show()
     end = time.time()
     print("Time:", end-start)
+
     """
-    ETAP II
+    Etap II
     """
 
-#     # random bitarray len = 127
-#     data = bitarray([random.randint(0, 1) for i in range(127)])
-#     # data = bytearray(os.urandom(255))
-
-#     # create a bch object
-#     BCH_POLYNOMIAL = 8219
-#     BCH_BITS = 19
-#     bch = bchlib.BCH(BCH_POLYNOMIAL, BCH_BITS)
-#     print(f"bch.m: {bch.m}, bch.n: {bch.n}, bch.t: {bch.t}")
-
-#     ecc = bch.encode(data)
-
-#     print(data, len(data))
-#     print(ecc, len(ecc))
-
-#     result_bits = bitarray()
-
-#     result_bits.frombytes(bytes(ecc))
-
-#     # print(data)
-#     print(result_bits, len(result_bits))
-#     # print(error_factor(data, result_bits))
-
-#     packet = ecc + data
-
-#     print('data size: %d' % (len(data)))
-#     print('ecc size: %d' % (len(ecc)))
-#     print('packet size: %d' % (len(packet)))
-
-
-    # KOMM class BCHCode(mu (wplywa na dlugosc wektora kodowego n = 2^(mu) - 1) , tau - The parameter τ is called the designed error-correcting capability of the BCH code (zdolnosc korekcyjna)) 
-    print("\n \n  there is komm section \n")
-
-    code = BCHCode(5,3)
-    print(code)
-    print((code.length, code.dimension, code.minimum_distance))
-
-    code.generator_polynomial
     
-    encodedmsg = code.encode(0b01010101, Generator)
 
-    print(encodedmsg)
 
 if __name__ == '__main__':
     main()
