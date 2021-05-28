@@ -72,16 +72,16 @@ def main():
     Etap II
     """
     print("Stage 2")
-
-    example_bit_array = b_util.urandom(121)
+    # 2048
+    example_bit_array = b_util.urandom(2048)
 
     np_array = np.array([example_bit_array[i]
                         for i in range(len(example_bit_array))])  # tablica int
 
     # μ - m - Indicates the length of the codeword n = 2^(μ) - 1
-    m = 9
+    m = 8
     # τ - t - The parameter τ is called the designed error-correcting capability of the BCH code (zdolność korekcyjna)
-    t = 58
+    t = 18
     # dimension k = 123
 
     code = BCHCode(m, t)
@@ -93,7 +93,7 @@ def main():
 
     encoded_msg = code.encode(np_array)
 
-    distorted_msg = Channel(0.4).distort(encoded_msg)
+    distorted_msg = Channel(0.05).distort(encoded_msg)
 
     decoded_msg = code.decode(distorted_msg)
 
