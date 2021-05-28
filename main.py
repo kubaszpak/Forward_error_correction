@@ -9,7 +9,10 @@ from bitarray import bitarray
 import bitarray.util as b_util
 from komm import BCHCode
 import numpy as np
-
+from bch import BCH
+from bch_params import bch_code_parameters
+import sys
+np.set_printoptions(threshold=sys.maxsize)
 
 def error_factor(generated_array, decoded_array):
     if(len(generated_array) != len(decoded_array)):
@@ -31,6 +34,15 @@ def how_many_distortions(generated_array, decoded_array):
             error_counter += 1
 
     return error_counter
+
+
+
+
+def fill_with_zeros(array, n):
+    filled_array = array.copy()
+    for i in range(n-len(array)):
+        filled_array.append(0)
+    return filled_array
 
 
 def main():
@@ -71,54 +83,57 @@ def main():
     """
     Etap II
     """
+    
     print("Stage 2")
     # 2048
-    example_bit_array = b_util.urandom(2048)
 
-    np_array = np.array([example_bit_array[i]
-                        for i in range(len(example_bit_array))])  # tablica int
+    bch = BCH()
 
-    # μ - m - Indicates the length of the codeword n = 2^(μ) - 1
-    m = 8
-    # τ - t - The parameter τ is called the designed error-correcting capability of the BCH code (zdolność korekcyjna)
-    t = 18
-    # dimension k = 123
+    a = []
+    b = []
+    error = 0
+    
+    sent_msg = b_util.urandom(200)
 
-    code = BCHCode(m, t)
+    for i in range(0,20,3):
+        counter = 0
+        for m in bch_code_parameters:
+            for t in bch_code_parameters[m]:
+                counter +=1
 
-    print("Length n, dimension k, min distance of BCHCode:",
-          (code.length, code.dimension, code.minimum_distance))
+                received_msg = BCH.code(sent_msg, m, t, bch_code_parameters[m][t], i/100)
+                
+                
+                filled_array = fill_with_zeros(sent_msg, len(received_msg))
+                
+                # print(len(example_bit_array), len(received_msg))
+                # # print(received_msg)
+                # print("Error [%] - decoded msg: ", error_factor(example_bit_array, received_msg))
+                error += error_factor(filled_array, received_msg)
+        a.append(i/100)
+        b.append(error/counter)
 
-    # print(code.generator_polynomial) # 0b1000111110101111
+        print(counter)
 
-    encoded_msg = code.encode(np_array)
-
-    distorted_msg = Channel(0.05).distort(encoded_msg)
-
-    decoded_msg = code.decode(distorted_msg)
-
-    received_msg = code.message_from_codeword(distorted_msg)
-
-    print("Encoded msg:   ", encoded_msg)
-
-    print("Distorted msg: ", distorted_msg)
-
-    print("Decoded msg:   ", decoded_msg)
-
-    print("Received msg:  ", received_msg)
-
-    print("Input np array:", np_array, "Length:", len(np_array))
-
-    print("Error [%] - decoded msg: ", error_factor(np_array, decoded_msg))
-
-    print("Distorted bits/ All bits: ",
-          how_many_distortions(encoded_msg, distorted_msg), "/", len(encoded_msg))
-
-    print("Error bits/ All bits: ",
-          how_many_distortions(np_array, decoded_msg), "/", len(np_array))
-
-    # print("Error [%] - received msg:", error_factor(np_array, received_msg))
+    print(a, b)
+    plt.plot(a, b)
+    plt.title("Error percentage depending on the probability p")
+    plt.xlabel("Probability of error p")
+    plt.ylabel("Error factor in %")
+    plt.show()
 
 
 if __name__ == '__main__':
     main()
+
+# print("Input np array:", np_array, "Length:", len(np_array))
+
+# print("Error [%] - decoded msg: ", error_factor(np_array, decoded_msg))
+
+# print("Distorted bits/ All bits: ",
+#     how_many_distortions(encoded_msg, distorted_msg), "/", len(encoded_msg))
+
+# print("Error bits/ All bits: ",
+#     how_many_distortions(np_array, decoded_msg), "/", len(np_array))
+
+# print("Error [%] - received msg:", error_factor(np_array, received_msg))
