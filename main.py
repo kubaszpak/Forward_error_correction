@@ -98,7 +98,7 @@ def main():
 
     code.generator_polynomial
     
-    encodedmsg = code.encode(0b01010101, Generator)
+    # encodedmsg = code.encode(0b01010101, )
 
     print(encodedmsg)
 
