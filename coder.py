@@ -1,30 +1,17 @@
 from bitarray import bitarray
-import bchlib
 
 
 class Coder:
     def __init__(self):
-        self.length = len(array) * 3
-        self.triple_array = bitarray(self.length)
-    
+        pass
+
     def triple_code(self, array):
-        for i in range(0, self.length, 3):
-            self.triple_array[i] = array[i // 3]
-            self.triple_array[i+1] = array[i // 3]
-            self.triple_array[i+2] = array[i // 3]
+        _len = len(array) * 3
+        tripple_array = bitarray(_len)
 
-    def bch_code(self, array, polynomial_degree):
-        bch = bchlib.BCH(polynomial_degreeL, len(array))
-        bch_array = bch.encode(array)
-        return bch_array
+        # tripple_array = bitarray([array[i//3] for i in range(0, _len, 3) for _ in range(3)])
 
-    def access_bit(data, num):
-        base = int(num // 8)
-        shift = int(num % 8)
-        return (data[base] & (1<<shift)) >> shift
-
-        
-
-
-
-    
+        for i in range(0, _len, 3):
+            for j in range(3):
+                tripple_array[i+j] = array[i//3]
+        return tripple_array
