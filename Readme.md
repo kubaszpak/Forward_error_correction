@@ -17,7 +17,8 @@ Eksperyment nr 1:
   
   <br>
 
-![alt text](charts/3code/chart_1.png "Title")
+<div style="text-align:center"><img src="charts/3code/chart_1.png" /></div>
+
 
 <br>
 <br>
@@ -30,4 +31,6 @@ Eksperyment nr 2:
 
 <br>
 
-![alt text](charts/3code/chart_2.png "Title")
+
+<div style="text-align:center"><img src="charts/3code/chart_2.png" /></div>
+
