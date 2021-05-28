@@ -17,7 +17,7 @@ Eksperyment nr 1:
   
   <br>
 
-![alt text](charts/chart_1.png "Title")
+![alt text](charts/3code/chart_1.png "Title")
 
 <br>
 <br>
@@ -30,4 +30,4 @@ Eksperyment nr 2:
 
 <br>
 
-![alt text](charts/chart_2.png "Title")
+![alt text](charts/3code/chart_2.png "Title")
