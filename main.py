@@ -1,3 +1,5 @@
+from PIL import Image
+import io
 import time
 import matplotlib.pyplot as plt
 from decoder import Decoder
@@ -13,6 +15,7 @@ from bch import BCH
 from bch_params import bch_code_parameters
 import sys
 np.set_printoptions(threshold=sys.maxsize)
+
 
 def error_factor(generated_array, decoded_array):
     if(len(generated_array) != len(decoded_array)):
@@ -34,8 +37,6 @@ def how_many_distortions(generated_array, decoded_array):
             error_counter += 1
 
     return error_counter
-
-
 
 
 def fill_with_zeros(array, n):
@@ -83,7 +84,7 @@ def main():
     """
     Etap II
     """
-    
+
     print("Stage 2")
     # 2048
 
@@ -92,20 +93,23 @@ def main():
     a = []
     b = []
     error = 0
-    
+
     sent_msg = b_util.urandom(2048)
 
-    m = 3
-    k = 1
-    t = 4 
+    m = 5
+    t = 5
+    k = 11
 
-    for i in range(0,20,1):
+    # 7_21_29
+
+    received_msg = BCH.code(sent_msg, m, t, k, 0.3)
+
+    for i in range(0, 20, 1):
         for j in range(10):
             received_msg = BCH.code(sent_msg, 3, 1, 4, i/100)
-            
-            
+
             filled_array = fill_with_zeros(sent_msg, len(received_msg))
-            
+
             # print(len(example_bit_array), len(received_msg))
             # # print(received_msg)
             # print("Error [%] - decoded msg: ", error_factor(example_bit_array, received_msg))
@@ -114,23 +118,14 @@ def main():
         a.append(i/100)
         b.append(error)
 
-
     print(a, b)
     plt.plot(a, b)
 
-   
-
-    plt.title(f"Error percentage depending on the probability p \nfor m = {m} k = {k} t = {t}")
+    plt.title(
+        f"Error percentage depending on the probability p \nfor m = {m} k = {k} t = {t}")
     plt.xlabel("Probability of error p")
     plt.ylabel("Error factor in %")
     plt.show()
-
-
-
-
-
-
-
 
     # for i in range(0,20,3):
     #     counter = 0
@@ -139,27 +134,22 @@ def main():
     #             counter +=1
 
     #             received_msg = BCH.code(sent_msg, m, t, bch_code_parameters[m][t], i/100)
-                
-                
+
+
     #             filled_array = fill_with_zeros(sent_msg, len(received_msg))
-                
     #             # print(len(example_bit_array), len(received_msg))
     #             # # print(received_msg)
     #             # print("Error [%] - decoded msg: ", error_factor(example_bit_array, received_msg))
     #             error += error_factor(filled_array, received_msg)
     #     a.append(i/100)
     #     b.append(error/counter)
-
     #     print(counter)
-
     # print(a, b)
     # plt.plot(a, b)
     # plt.title("Error percentage depending on the probability p")
     # plt.xlabel("Probability of error p")
     # plt.ylabel("Error factor in %")
     # plt.show()
-
-
 if __name__ == '__main__':
     main()
 
