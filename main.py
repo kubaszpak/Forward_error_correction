@@ -94,62 +94,63 @@ def main():
     b = []
     error = 0
 
-    sent_msg = b_util.urandom(2048)
+    sent_msg = b_util.urandom(512)
 
-    m = 5
-    t = 5
-    k = 11
+    m = 8
+    t = 63
+    k = 9
 
     # 7_21_29
 
-    received_msg = BCH.code(sent_msg, m, t, k, 0.3)
+    # received_msg = BCH.code(sent_msg, m, t, k, 0.3)
 
-    for i in range(0, 20, 1):
-        for j in range(10):
-            received_msg = BCH.code(sent_msg, 3, 1, 4, i/100)
+    # for i in range(0, 20, 1):
+    #     for j in range(10):
+    #         received_msg = BCH.code(sent_msg, 3, 1, 4, i/100)
 
-            filled_array = fill_with_zeros(sent_msg, len(received_msg))
+    #         filled_array = fill_with_zeros(sent_msg, len(received_msg))
 
-            # print(len(example_bit_array), len(received_msg))
-            # # print(received_msg)
-            # print("Error [%] - decoded msg: ", error_factor(example_bit_array, received_msg))
-            error += error_factor(filled_array, received_msg)
-        error /= 10
-        a.append(i/100)
-        b.append(error)
-
-    print(a, b)
-    plt.plot(a, b)
-
-    plt.title(
-        f"Error percentage depending on the probability p \nfor m = {m} k = {k} t = {t}")
-    plt.xlabel("Probability of error p")
-    plt.ylabel("Error factor in %")
-    plt.show()
-
-    # for i in range(0,20,3):
-    #     counter = 0
-    #     for m in bch_code_parameters:
-    #         for t in bch_code_parameters[m]:
-    #             counter +=1
-
-    #             received_msg = BCH.code(sent_msg, m, t, bch_code_parameters[m][t], i/100)
-
-
-    #             filled_array = fill_with_zeros(sent_msg, len(received_msg))
-    #             # print(len(example_bit_array), len(received_msg))
-    #             # # print(received_msg)
-    #             # print("Error [%] - decoded msg: ", error_factor(example_bit_array, received_msg))
-    #             error += error_factor(filled_array, received_msg)
+    #         # print(len(example_bit_array), len(received_msg))
+    #         # # print(received_msg)
+    #         # print("Error [%] - decoded msg: ", error_factor(example_bit_array, received_msg))
+    #         error += error_factor(filled_array, received_msg)
+    #     error /= 10
     #     a.append(i/100)
-    #     b.append(error/counter)
-    #     print(counter)
+    #     b.append(error)
+
     # print(a, b)
     # plt.plot(a, b)
-    # plt.title("Error percentage depending on the probability p")
+
+    # plt.title(
+    #     f"Error percentage depending on the probability p \nfor m = {m} k = {k} t = {t}")
     # plt.xlabel("Probability of error p")
     # plt.ylabel("Error factor in %")
     # plt.show()
+
+    for i in range(0,20,3):
+        counter = 0
+        for m in bch_code_parameters:
+            for t in bch_code_parameters[m]:
+                counter +=1
+
+                received_msg = BCH.code(sent_msg, m, t, bch_code_parameters[m][t], i/100)
+
+
+                filled_array = fill_with_zeros(sent_msg, len(received_msg))
+                # print(len(example_bit_array), len(received_msg))
+                # # print(received_msg)
+                # print("Error [%] - decoded msg: ", error_factor(example_bit_array, received_msg))
+                error += error_factor(filled_array, received_msg)
+        a.append(i/100)
+        b.append(error/counter)
+        error = 0
+        print(counter)
+    print(a, b)
+    plt.plot(a, b)
+    plt.title("Error percentage depending on the probability p")
+    plt.xlabel("Probability of error p")
+    plt.ylabel("Error factor in %")
+    plt.show()
 if __name__ == '__main__':
     main()
 

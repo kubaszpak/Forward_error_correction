@@ -1,20 +1,20 @@
-## Forward error correction
+# Forward error correction
 
 <br>
 
-### Piotr Łach
+### Piotr Łach 
 
-### Jakub Szpak
+### Jakub Szpak 
 
 <br>
 <br>
 
-### Model symulacyjny zbudowano z pomocą jezyka Python. Zaimplementowano następujące klasy: 
+### Model symulacyjny zbudowano z pomocą języka Python. Zaimplementowano następujące klasy: 
 - koder
 - kanał
 - dekoder
 
-Koder ma za zadanie zakodowanie wiadomości wejściowej przez potrojenie każdego bitu. W związku z tym wysyłana wiadomość ma trzy razy większy rozmiar niż wiadomość wejściowa.
+Koder ma za zadanie zakodowanie wiadomości wejściowej przez potrojenie każdego bitu. W związku z tym wysyłana wiadomość ma trzykrotnie większy rozmiar niż wiadomość wejściowa.
 
 Kanał zakłóca przesyłaną wiadomość z prawdopodobieństwem wejściowym p. Zakłócenie polega na odwróceniu wartości bitu. 
 
@@ -51,10 +51,11 @@ Dekoder dekoduje odebraną wiadomość poprzez sprawdzenie każdej trójki bitó
 
 <br>
 <br>
-<br>
 
-### Optymalizacja systemu 
-System zoptymalizowano przez zastosowanie kodów BCH, zamiast stałego potrajania bitów. Zmodyfikowano koder i dekoder. W celu spełnienia założeń wykorzystaliśmy klasę BCHCode z biblioteki komm.
+
+
+## Optymalizacja systemu 
+System zoptymalizowano poprzez zastosowanie kodów BCH, zamiast stałego potrajania bitów. Zmodyfikowano koder i dekoder. W celu spełnienia założeń wykorzystaliśmy klasę BCHCode z biblioteki komm.
 
 
 
@@ -69,13 +70,24 @@ W pierwszym z eksperymentów przygotowaliśmy słownik parametrów BCH dla m od 
 
 m - określa długość słowa kodowego n = 2^m - 1 <br>
 t - zdolność korekcyjna <br>
-k - długość pojedzynczego pakietu
+k - długość pojedynczego pakietu
+
+<br>
 
 <div style="text-align:center"><img src="charts/bch/p0to20.png" /></div>
 
-Przeprowadzając pomiar w ten sposób otrzymaliśmy większe wartości błędów niż dla prostego kodu potrającego. Analizując jednak część parametrów indywidualnie doszliśmy do wniosku, że kody BCH potrafią być bardziej wydajne.
+<br>
 
-Wykonano 10 eksperymentów wykorzystując różne parametry kodów na wiadomości o rozmiarze 2048b. Dla każdego z eksperymentów generowano dziesięciokrotnie nową populację. Wyniki są uśrednione. 
+Przeprowadzając pomiar w ten sposób otrzymaliśmy mniejsze wartości błędów niż dla prostego kodu potrajającego.  
+
+<br>
+
+### Indywidualna analiza parametrów
+
+
+Wykonano 10 eksperymentów wykorzystując różne parametry kodów na wiadomości o rozmiarze 2048b. Dla każdego z eksperymentów generowano nową populację dziesięciokrotnie. Wyniki są uśrednione. 
+
+<br>
 
 <div style="text-align:center"><img src="charts/bch/3_1_4.png" /></div>
 <div style="text-align:center"><img src="charts/bch/4_2_27.png" /></div>
